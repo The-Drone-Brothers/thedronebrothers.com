@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+
+# environment — keep .env.example, ignore real env files
+.env
+.env.*
+!.env.example
+
+# os / editor cruft
+.DS_Store
+*.log
+
+# claude code local (per-machine) settings
+.claude/settings.local.json
+
+# --- Confidential reference material — NEVER commit to this PUBLIC repo ---
+# Brand style guide, data dictionary, internal decision brief, operator prompt.
+DB_style_guide F.pdf
+Data Dictionary for WP _-_ n8n.pdf
+Drone Brothers Website — AI Build Decision Brief.md
+Foundation_Build_Init_Prompt_ClaudeCode.md
