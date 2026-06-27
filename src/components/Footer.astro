@@ -26,6 +26,27 @@ const mutedLink = 'text-small text-white/70 transition-colors hover:text-brand-r
             <a href={telHref} class={mutedLink}>{site.telephone}</a><br />
             <a href={`mailto:${site.email}`} class={mutedLink}>{site.email}</a>
           </p>
+          {
+            socialNav.length > 0 && (
+              <nav aria-label="Social" class="mt-3">
+                <h2 class="text-caption font-heading uppercase tracking-wide text-white">Follow</h2>
+                <ul class="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+                  {socialNav.map((link) => (
+                    <li>
+                      <a
+                        href={link.href}
+                        class={mutedLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )
+          }
         </div>
 
         {/* Link columns */}
@@ -63,20 +84,6 @@ const mutedLink = 'text-small text-white/70 transition-colors hover:text-brand-r
             legalNav.map((link) => (
               <li>
                 <a href={link.href} class="transition-colors hover:text-brand-red">
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
-          {
-            socialNav.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  class="transition-colors hover:text-brand-red"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
                   {link.label}
                 </a>
               </li>

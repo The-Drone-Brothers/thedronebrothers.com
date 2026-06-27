@@ -43,6 +43,12 @@ export const site: SiteConfig = {
   email: 'info@dronebros.com',
   // TODO: add a 1200x630 default share image, then set e.g. '/og-default.png'.
   ogImage: undefined,
-  // TODO: add LinkedIn (primary) + Instagram profile URLs (Style Guide §09).
-  sameAs: [],
+  sameAs: [
+    'https://www.linkedin.com/company/drone-brothers/',
+    'https://www.instagram.com/dronebros1/',
+    'https://www.youtube.com/dronebros',
+    'https://vimeo.com/dronebros',
+    'https://facebook.com/dronebros/',
+    'https://twitter.com/dronebros1',
+  ],
 };

@@ -58,6 +58,12 @@ export const legalNav: NavLink[] = [
   { label: 'Terms', href: '/terms' },
 ];
 
-/** Social profiles. TODO: add LinkedIn (primary) + Instagram URLs (external: true).
-    Rendered only when populated (see TODO.md item 3). */
-export const socialNav: NavLink[] = [];
+/** Social profiles (LinkedIn = primary). Rendered as the footer "Follow" links. */
+export const socialNav: NavLink[] = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/drone-brothers/', external: true },
+  { label: 'Instagram', href: 'https://www.instagram.com/dronebros1/', external: true },
+  { label: 'YouTube', href: 'https://www.youtube.com/dronebros', external: true },
+  { label: 'Vimeo', href: 'https://vimeo.com/dronebros', external: true },
+  { label: 'Facebook', href: 'https://facebook.com/dronebros/', external: true },
+  { label: 'X', href: 'https://twitter.com/dronebros1', external: true },
+];
