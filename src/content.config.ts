@@ -77,4 +77,39 @@ const pilots = defineCollection({
   }),
 });
 
-export const collections = { pages, posts, states, cities, pilots };
+/** Home-page sections — composable, content-authored building blocks.
+   A non-technical author adds/edits one markdown file per section; the home page
+   renders them in `order`. Each `type` validates its own required fields (Zod
+   discriminated union) so bad/missing fields fail the build. */
+const bg = z.enum(['white', 'surface', 'ink', 'red']).default('white');
+const sections = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/sections' }),
+  schema: z.discriminatedUnion('type', [
+    z.object({
+      type: z.literal('prose'),
+      order: z.number(),
+      background: bg,
+      heading: z.string().optional(),
+      // body = the markdown beneath the front-matter
+    }),
+    z.object({
+      type: z.literal('cta'),
+      order: z.number(),
+      background: bg,
+      heading: z.string(),
+      body: z.string().optional(),
+      buttonLabel: z.string(),
+      buttonHref: z.string(),
+    }),
+    z.object({
+      type: z.literal('testimonial'),
+      order: z.number(),
+      background: bg,
+      quote: z.string(),
+      author: z.string(),
+      role: z.string().optional(),
+    }),
+  ]),
+});
+
+export const collections = { pages, posts, states, cities, pilots, sections };

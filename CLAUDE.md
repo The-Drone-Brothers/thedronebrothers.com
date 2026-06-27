@@ -47,6 +47,8 @@ unlock. Uninstructed change is forbidden; instructed change is fine.
 - `src/styles/tokens.css` (the `@theme` token source) + `src/styles/global.css`
 - `src/components/primitives/*` (`Container`/`Section`/`Stack`/`Grid`),
   `src/components/Seo.astro`, `Header.astro`, `Footer.astro`, `Sidebar.astro`, `Form.astro`
+- `src/components/sections/*` (section components + `SectionRenderer`) — the section
+  _types_ are foundation; the section _entries_ are content (see OPEN)
 - `src/layouts/*` (`BaseLayout`, `PageLayout`, `ArticleLayout`)
 - `src/config/*` (`site.ts`, `navigation.ts`), `src/content.config.ts` (Zod schemas)
 - routing files in `src/pages/*` (`[...slug].astro`, `blog/*`, `rss.xml.ts`, `search.astro`,
@@ -57,8 +59,10 @@ unlock. Uninstructed change is forbidden; instructed change is fine.
 
 **OPEN — content (safe to add/edit in a normal content session):**
 content-collection entries (markdown + front-matter) under `src/content/**`,
-and the copy _inside_ them. That's it. Content lives in data, never in the chassis.
-(The `__example` entries are deletable once real content exists.)
+and the copy _inside_ them — including **home-page sections** in
+`src/content/sections/**` (add/reorder/edit CTA, testimonial, prose blocks).
+That's it. Content lives in data, never in the chassis. (The `__example` entries and
+the sample `sections/*` are deletable once real content exists.)
 
 ## 5) How to make a SANCTIONED foundation change (unfreeze → change → refreeze)
 

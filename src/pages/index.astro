@@ -1,38 +1,37 @@
 ---
-// Phase 2 test page — renders through BaseLayout to prove the global <head>,
-// SEO, favicon, font preload, and layout primitives. Real homepage content
-// arrives later; chrome (header/footer) arrives in Phase 3.
+/* Home page. The hero is foundation (chrome); everything below is composed from
+   the `sections` content collection, ordered by `order`. Non-technical authors
+   add/edit sections as markdown in src/content/sections/** — never this file. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/primitives/Section.astro';
 import Container from '../components/primitives/Container.astro';
 import Stack from '../components/primitives/Stack.astro';
+import SectionRenderer from '../components/sections/SectionRenderer.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../config/site';
+import { headerCta } from '../config/navigation';
+
+const sections = (await getCollection('sections')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout
-  title="Foundation"
-  description="Foundation scaffold for the Drone Brothers static site — layout shell, SEO, and design system."
->
-  <Section>
+<BaseLayout>
+  <Section background="ink">
     <Container>
-      <Stack gap={3}>
-        <h1 class="text-h1 font-heading">Foundation shell (Phase 2)</h1>
-        <p class="max-w-measure text-base">
-          BaseLayout, SEO, favicon, font preload, and layout primitives (Container / Section / Stack
-          / Grid) are wired. View source to inspect the
-          <code>&lt;head&gt;</code>. Header and footer arrive in Phase 3.
+      <Stack gap={3} class="items-start">
+        <p class="text-caption font-heading uppercase tracking-wide text-brand-red">
+          {site.tagline}
         </p>
+        <h1 class="text-display font-heading">Aerial intelligence for commercial construction</h1>
+        <p class="max-w-measure text-base text-white/80">{site.description}</p>
+        <a
+          href={headerCta.href}
+          class="inline-flex items-center justify-center rounded-md bg-brand-red px-3 py-2 font-heading text-[1.1875rem] font-bold uppercase leading-none text-white transition-colors duration-150 ease-standard hover:bg-brand-red-deep"
+        >
+          {headerCta.label}
+        </a>
       </Stack>
     </Container>
   </Section>
 
-  <Section background="ink">
-    <Container>
-      <Stack gap={2}>
-        <h2 class="text-h2 font-heading">Dark section</h2>
-        <p class="max-w-measure text-base">
-          Headings inherit color, so they read on dark backgrounds.
-        </p>
-      </Stack>
-    </Container>
-  </Section>
+  {sections.map((entry) => <SectionRenderer entry={entry} />)}
 </BaseLayout>

@@ -1,0 +1,35 @@
+---
+/* TestimonialSection — a single quote. FROZEN / change-controlled.
+   Rendered from a `sections` entry of type "testimonial". */
+import Container from '../primitives/Container.astro';
+
+interface Props {
+  quote: string;
+  author: string;
+  role?: string;
+  background?: 'white' | 'surface' | 'ink' | 'red';
+}
+const { quote, author, role, background = 'surface' }: Props = Astro.props;
+
+const bgClass = {
+  white: 'bg-white text-ink',
+  surface: 'bg-surface text-ink',
+  ink: 'bg-ink text-white',
+  red: 'bg-brand-red text-white',
+}[background];
+---
+
+<section class:list={['py-8 md:py-10', bgClass]}>
+  <Container size="measure">
+    <figure>
+      <div class="h-1 w-8 bg-brand-red"></div>
+      <blockquote class="mt-3 font-heading text-h3 font-semibold">
+        &ldquo;{quote}&rdquo;
+      </blockquote>
+      <figcaption class="mt-3 text-small">
+        <span class="font-heading font-semibold uppercase tracking-wide">{author}</span>
+        {role && <span class="text-gray-mid"> &middot; {role}</span>}
+      </figcaption>
+    </figure>
+  </Container>
+</section>
