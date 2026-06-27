@@ -226,6 +226,31 @@ Every section also takes `order` (position) and `background` (`white` / `surface
 
 ---
 
+## Troubleshooting
+
+**The preview looks blank or stale (e.g. sections/testimonials don't appear).**
+Almost always a **leftover preview server** from an earlier session still holding the
+address. The fix is to stop it and start one fresh:
+
+```sh
+npx astro dev stop      # stop any background preview server
+npm run dev             # start a fresh one
+```
+
+If it persists, free the port and restart:
+
+```sh
+lsof -ti :4321 | xargs kill   # release http://localhost:4321
+npm run dev
+```
+
+A clean build is the source of truth — `npm run build` always reflects exactly what will
+publish. If the build shows your change but the live preview doesn't, it's a stale preview
+server, not your content. (Tip: don't start the preview with `--background`; a foreground
+`npm run dev` you can stop with Ctrl+C avoids stale servers.)
+
+---
+
 ## Setup status (what's live vs. pending)
 
 The foundation is **complete and verified**. To make the _staging preview links_ and the
