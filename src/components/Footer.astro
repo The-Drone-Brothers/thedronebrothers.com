@@ -1,0 +1,89 @@
+---
+/* Footer — global chrome (FROZEN / change-controlled).
+   Dark (brand prefers dark), reversed stacked logo, multi-column nav,
+   contact, legal row, and an auto-updating copyright year (build-time). */
+import Container from './primitives/Container.astro';
+import { footerColumns, legalNav, socialNav } from '../config/navigation';
+import { site } from '../config/site';
+import logoUrl from '../assets/logos/logo-stacked-reversed.svg?url';
+
+const year = new Date().getFullYear();
+const telHref = `tel:${site.telephone.replace(/[^+\d]/g, '')}`;
+const mutedLink = 'text-small text-white/70 transition-colors hover:text-brand-red';
+---
+
+<footer class="bg-ink text-white">
+  <Container>
+    <div class="py-8 md:py-10">
+      <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+        {/* Brand + contact */}
+        <div>
+          <a href="/" class="inline-flex">
+            <img src={logoUrl} alt="Drone Brothers" class="h-12 w-auto" />
+          </a>
+          <p class="mt-3 max-w-measure text-small text-white/70">{site.tagline}</p>
+          <p class="mt-3 text-small">
+            <a href={telHref} class={mutedLink}>{site.telephone}</a><br />
+            <a href={`mailto:${site.email}`} class={mutedLink}>{site.email}</a>
+          </p>
+        </div>
+
+        {/* Link columns */}
+        {
+          footerColumns.map((col) => (
+            <nav aria-label={col.heading}>
+              <h2 class="text-caption font-heading uppercase tracking-wide text-white">
+                {col.heading}
+              </h2>
+              <ul class="mt-2 flex flex-col gap-1">
+                {col.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class={mutedLink}
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))
+        }
+      </div>
+
+      {/* Bottom row */}
+      <div
+        class="mt-8 flex flex-col gap-2 border-t border-white/15 pt-3 text-small text-white/70 md:flex-row md:items-center md:justify-between"
+      >
+        <p>&copy; {year} {site.name}. DSP+&trade; &middot; All rights reserved.</p>
+        <ul class="flex flex-wrap gap-3">
+          {
+            legalNav.map((link) => (
+              <li>
+                <a href={link.href} class="transition-colors hover:text-brand-red">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+          {
+            socialNav.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="transition-colors hover:text-brand-red"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Container>
+</footer>

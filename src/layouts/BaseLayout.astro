@@ -3,6 +3,8 @@
    FROZEN / change-controlled. Header/Footer slots are filled in Phase 3. */
 import '../styles/global.css';
 import Seo from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 // Preload the primary self-hosted weights (hashed URLs from @fontsource).
 import josefin600 from '@fontsource/josefin-sans/files/josefin-sans-latin-600-normal.woff2?url';
@@ -61,12 +63,12 @@ const { title, description, canonical, ogImage, ogType, noindex, bodyClass = '' 
       Skip to content
     </a>
 
-    <slot name="header" />
+    <slot name="header"><Header /></slot>
 
     <main id="main">
       <slot />
     </main>
 
-    <slot name="footer" />
+    <slot name="footer"><Footer /></slot>
   </body>
 </html>
