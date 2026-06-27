@@ -1,0 +1,25 @@
+---
+/* PageLayout — renders a `pages` collection entry. FROZEN / change-controlled. */
+import BaseLayout from './BaseLayout.astro';
+import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  ogImage?: string;
+}
+const { title, description, noindex, ogImage }: Props = Astro.props;
+---
+
+<BaseLayout title={title} description={description} noindex={noindex} ogImage={ogImage}>
+  <Section>
+    <Container size="measure">
+      <h1 class="text-h1 font-heading">{title}</h1>
+      <div class="mt-4 space-y-3 text-base">
+        <slot />
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>

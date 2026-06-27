@@ -4,3 +4,5 @@ dist/
 *.pdf
 *.svg
 .github/
+# content entries are authored data (markdown), not code — don't reformat
+src/content/
