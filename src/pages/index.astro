@@ -1,20 +1,38 @@
 ---
-// Phase 0 placeholder page — proves the toolchain builds and serves.
-// Real layouts/chrome arrive in Phases 2–3; this page will be replaced.
-import '../styles/global.css';
+// Phase 2 test page — renders through BaseLayout to prove the global <head>,
+// SEO, favicon, font preload, and layout primitives. Real homepage content
+// arrives later; chrome (header/footer) arrives in Phase 3.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
+import Stack from '../components/primitives/Stack.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Drone Brothers — Foundation Scaffold</title>
-  </head>
-  <body>
-    <main>
-      <h1>Drone Brothers — foundation scaffold (Phase 0)</h1>
-      <p>Astro + TypeScript (strict) + Tailwind v4 toolchain is live. No content yet.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title="Foundation"
+  description="Foundation scaffold for the Drone Brothers static site — layout shell, SEO, and design system."
+>
+  <Section>
+    <Container>
+      <Stack gap={3}>
+        <h1 class="text-h1 font-heading">Foundation shell (Phase 2)</h1>
+        <p class="max-w-measure text-base">
+          BaseLayout, SEO, favicon, font preload, and layout primitives (Container / Section / Stack
+          / Grid) are wired. View source to inspect the
+          <code>&lt;head&gt;</code>. Header and footer arrive in Phase 3.
+        </p>
+      </Stack>
+    </Container>
+  </Section>
+
+  <Section background="ink">
+    <Container>
+      <Stack gap={2}>
+        <h2 class="text-h2 font-heading">Dark section</h2>
+        <p class="max-w-measure text-base">
+          Headings inherit color, so they read on dark backgrounds.
+        </p>
+      </Stack>
+    </Container>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+/* Section — semantic vertical rhythm band with a background treatment.
+   FROZEN / change-controlled. background="ink" sets white text so headings
+   (which inherit color) read correctly on dark — brand prefers dark sections. */
+interface Props {
+  as?: string;
+  background?: 'white' | 'surface' | 'ink';
+  class?: string;
+}
+const { as: Tag = 'section', background = 'white', class: className = '' }: Props = Astro.props;
+const bg = {
+  white: 'bg-white text-ink',
+  surface: 'bg-surface text-ink',
+  ink: 'bg-ink text-white',
+}[background];
+---
+
+<Tag class:list={['py-8 md:py-10', bg, className]}>
+  <slot />
+</Tag>

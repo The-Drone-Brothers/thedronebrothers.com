@@ -1,0 +1,32 @@
+---
+/* Grid — responsive columns with a token gap. FROZEN / change-controlled.
+   Columns step up at the brand breakpoints (480 / 768). Literal class maps
+   so Tailwind's scanner emits every utility. */
+interface Props {
+  as?: string;
+  cols?: 1 | 2 | 3 | 4;
+  gap?: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10;
+  class?: string;
+}
+const { as: Tag = 'div', cols = 3, gap = 3, class: className = '' }: Props = Astro.props;
+const colsMap: Record<number, string> = {
+  1: 'grid-cols-1',
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4',
+};
+const gaps: Record<number, string> = {
+  1: 'gap-1',
+  2: 'gap-2',
+  3: 'gap-3',
+  4: 'gap-4',
+  5: 'gap-5',
+  6: 'gap-6',
+  8: 'gap-8',
+  10: 'gap-10',
+};
+---
+
+<Tag class:list={['grid', colsMap[cols], gaps[gap], className]}>
+  <slot />
+</Tag>
