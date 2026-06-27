@@ -21,9 +21,16 @@ Official Drone Brothers logo files (DSP+™ Brand Style Guide v2.0). These are t
 
 ## Db monogram
 
-`drone-bros-monogram.png` — split-color DB (D ink, B red) on light gray (§09). Source
-is **258×139 (not square)**; for the favicon it was padded to a square on `#f2f2f2` and
-resized to the icon set in `public/` (`favicon-16/32`, `apple-touch-icon`, `icon-192/512`)
-via `sips`. To refresh, replace this PNG (ideally with a square or on-black master) and
-regenerate. The brand also defines an on-black monogram (§09) if a darker favicon is
-preferred later.
+`drone-bros-monogram.png` — DB in red on black, **square 128×128** (§09). Used to
+generate the favicon set in `public/` (`favicon-16/32`, `apple-touch-icon`,
+`icon-192/512`) via `sips`. The 16/32/180 are crisp downscales; **`icon-192/512` are
+upscaled from 128px and look slightly soft** — drop in a ≥512px square master and
+regenerate for pixel-crisp PWA/app icons.
+
+Regenerate after replacing this file:
+
+```sh
+SRC=src/assets/logos/drone-bros-monogram.png
+for s in "16 favicon-16x16" "32 favicon-32x32" "180 apple-touch-icon" "192 icon-192" "512 icon-512"; do
+  set -- $s; sips -z "$1" "$1" "$SRC" --out "public/$2.png"; done
+```
