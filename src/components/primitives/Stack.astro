@@ -1,0 +1,24 @@
+---
+/* Stack — vertical flow with a token gap (8px scale). FROZEN / change-controlled.
+   Literal class map so Tailwind's scanner can see every utility. */
+interface Props {
+  as?: string;
+  gap?: 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10;
+  class?: string;
+}
+const { as: Tag = 'div', gap = 3, class: className = '' }: Props = Astro.props;
+const gaps: Record<number, string> = {
+  1: 'gap-1',
+  2: 'gap-2',
+  3: 'gap-3',
+  4: 'gap-4',
+  5: 'gap-5',
+  6: 'gap-6',
+  8: 'gap-8',
+  10: 'gap-10',
+};
+---
+
+<Tag class:list={['flex flex-col', gaps[gap], className]}>
+  <slot />
+</Tag>

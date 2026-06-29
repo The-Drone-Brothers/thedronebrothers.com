@@ -1,0 +1,117 @@
+---
+/* Form — reusable contact form (FROZEN / change-controlled).
+   Posts to a Formspree endpoint (env: PUBLIC_FORMSPREE_ENDPOINT) with a honeypot
+   and optional Cloudflare Turnstile (env: PUBLIC_TURNSTILE_SITE_KEY). No live keys
+   in the repo. Degrades gracefully: with no endpoint set it renders, shows a notice,
+   and disables submit. Progressive enhancement: native POST works without JS; JS
+   upgrades to async submit with inline status. */
+interface Props {
+  action?: string;
+  class?: string;
+}
+const { action = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT, class: className = '' } =
+  Astro.props as Props;
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const configured = Boolean(action);
+
+const field = 'w-full rounded-md border border-border bg-white px-3 py-2 text-base text-ink';
+const label = 'font-heading text-small font-semibold uppercase tracking-wide text-ink';
+const cta =
+  'inline-flex items-center justify-center rounded-md bg-brand-red px-3 py-2 font-heading text-[1.1875rem] font-bold uppercase leading-none text-white transition-colors duration-150 ease-standard hover:bg-brand-red-deep disabled:cursor-not-allowed disabled:opacity-50';
+---
+
+{
+  turnstileKey && (
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
+  )
+}
+
+<form
+  class:list={['flex flex-col gap-4', className]}
+  method="POST"
+  action={action}
+  data-form
+  novalidate
+>
+  {
+    !configured && (
+      <p class="rounded-md border border-border bg-surface p-3 text-small text-gray-mid">
+        Contact form endpoint not configured. Set <code>PUBLIC_FORMSPREE_ENDPOINT</code> to enable
+        submissions (see <code>.env.example</code>).
+      </p>
+    )
+  }
+
+  {/* Honeypot — bots fill this; Formspree drops those submissions. */}
+  <input
+    type="text"
+    name="_gotcha"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+    class="hidden"
+  />
+
+  <div class="flex flex-col gap-1">
+    <label for="f-name" class={label}>Name</label>
+    <input id="f-name" name="name" type="text" autocomplete="name" required class={field} />
+  </div>
+
+  <div class="flex flex-col gap-1">
+    <label for="f-email" class={label}>Email</label>
+    <input id="f-email" name="email" type="email" autocomplete="email" required class={field} />
+  </div>
+
+  <div class="flex flex-col gap-1">
+    <label for="f-message" class={label}>How can we help?</label>
+    <textarea id="f-message" name="message" rows="5" required class={field}></textarea>
+  </div>
+
+  {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} />}
+
+  <div>
+    <button type="submit" class={cta} disabled={!configured}>Send message</button>
+  </div>
+
+  <p data-form-status role="status" aria-live="polite" class="text-small"></p>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-form]');
+  const status = form?.querySelector<HTMLParagraphElement>('[data-form-status]');
+
+  if (form && form.action) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const setStatus = (msg: string, ok: boolean) => {
+        if (!status) return;
+        status.textContent = msg;
+        status.style.color = ok ? 'var(--color-ink)' : 'var(--color-brand-red)';
+      };
+      const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (submit) submit.disabled = true;
+      setStatus('Sending…', true);
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (response.ok) {
+          form.reset();
+          setStatus('Thanks — your message has been sent.', true);
+        } else {
+          setStatus('Something went wrong. Please try again or email us directly.', false);
+        }
+      } catch {
+        setStatus('Network error. Please try again or email us directly.', false);
+      } finally {
+        if (submit) submit.disabled = false;
+      }
+    });
+  }
+</script>

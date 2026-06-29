@@ -1,0 +1,79 @@
+---
+/* <Seo> — meta, OpenGraph, Twitter, canonical, robots + JSON-LD.
+   FROZEN / change-controlled. Defaults pulled from src/config/site.ts.
+   Renders the page <title>, so BaseLayout must not emit its own. */
+import { site } from '../config/site';
+
+interface Props {
+  /** Page title (composed via site.titleTemplate). Omit for the default title. */
+  title?: string;
+  /** Meta description override. */
+  description?: string;
+  /** Canonical URL override (absolute). Defaults to the current page URL. */
+  canonical?: string;
+  /** Share image (absolute path under / or full URL). Defaults to site.ogImage. */
+  ogImage?: string;
+  /** OpenGraph type. */
+  ogType?: 'website' | 'article';
+  /** Emit noindex,nofollow. */
+  noindex?: boolean;
+}
+
+const { title, description, canonical, ogImage, ogType = 'website', noindex = false } = Astro.props;
+
+const origin = Astro.site ?? new URL(site.url);
+const pageTitle = title ? site.titleTemplate.replace('%s', title) : site.defaultTitle;
+const metaDescription = description ?? site.description;
+const canonicalURL = canonical ?? new URL(Astro.url.pathname, origin).href;
+
+const shareImage = ogImage ?? site.ogImage;
+const shareImageURL = shareImage ? new URL(shareImage, origin).href : undefined;
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.legalName,
+  url: site.url,
+  logo: new URL('/icon-512.png', origin).href,
+  description: site.description,
+  telephone: site.telephone,
+  email: site.email,
+  ...(site.sameAs.length > 0 ? { sameAs: site.sameAs } : {}),
+};
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${site.url}/search?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={metaDescription} />
+<link rel="canonical" href={canonicalURL} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+{/* OpenGraph */}
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content={site.locale} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={metaDescription} />
+<meta property="og:url" content={canonicalURL} />
+{shareImageURL && <meta property="og:image" content={shareImageURL} />}
+
+{/* Twitter */}
+<meta name="twitter:card" content={shareImageURL ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={metaDescription} />
+{shareImageURL && <meta name="twitter:image" content={shareImageURL} />}
+
+{/* Structured data */}
+<script type="application/ld+json" is:inline set:html={JSON.stringify(organizationLd)} />
+<script type="application/ld+json" is:inline set:html={JSON.stringify(websiteLd)} />

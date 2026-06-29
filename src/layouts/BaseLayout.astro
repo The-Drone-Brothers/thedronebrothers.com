@@ -1,0 +1,74 @@
+---
+/* BaseLayout — the global shell every page renders into.
+   FROZEN / change-controlled. Header/Footer slots are filled in Phase 3. */
+import '../styles/global.css';
+import Seo from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Preload the primary self-hosted weights (hashed URLs from @fontsource).
+import josefin600 from '@fontsource/josefin-sans/files/josefin-sans-latin-600-normal.woff2?url';
+import josefin700 from '@fontsource/josefin-sans/files/josefin-sans-latin-700-normal.woff2?url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  /** Extra classes on <body>. */
+  bodyClass?: string;
+}
+
+const { title, description, canonical, ogImage, ogType, noindex, bodyClass = '' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <Seo
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogImage={ogImage}
+      ogType={ogType}
+      noindex={noindex}
+    />
+
+    {/* Favicons + app icons (Db monogram) */}
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1a1a1a" />
+
+    {/* Font preload (primary weights) */}
+    <link rel="preload" href={josefin600} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={josefin700} as="font" type="font/woff2" crossorigin="anonymous" />
+
+    {/* Analytics / extra head tags injected per-page */}
+    <slot name="head" />
+  </head>
+
+  <body class:list={[bodyClass]}>
+    <a
+      href="#main"
+      class="sr-only rounded-md bg-ink px-3 py-2 font-heading text-small font-semibold text-white focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50"
+    >
+      Skip to content
+    </a>
+
+    <slot name="header"><Header /></slot>
+
+    <main id="main" data-pagefind-body>
+      <slot />
+    </main>
+
+    <slot name="footer"><Footer /></slot>
+  </body>
+</html>

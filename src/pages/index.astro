@@ -1,20 +1,37 @@
 ---
-// Phase 0 placeholder page — proves the toolchain builds and serves.
-// Real layouts/chrome arrive in Phases 2–3; this page will be replaced.
-import '../styles/global.css';
+/* Home page. The hero is foundation (chrome); everything below is composed from
+   the `sections` content collection, ordered by `order`. Non-technical authors
+   add/edit sections as markdown in src/content/sections/** — never this file. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
+import Stack from '../components/primitives/Stack.astro';
+import SectionRenderer from '../components/sections/SectionRenderer.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../config/site';
+import { headerCta } from '../config/navigation';
+
+const sections = (await getCollection('sections')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Drone Brothers — Foundation Scaffold</title>
-  </head>
-  <body>
-    <main>
-      <h1>Drone Brothers — foundation scaffold (Phase 0)</h1>
-      <p>Astro + TypeScript (strict) + Tailwind v4 toolchain is live. No content yet.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout>
+  <Section background="ink">
+    <Container>
+      <Stack gap={3} class="items-start">
+        <p class="text-caption font-heading uppercase tracking-wide text-brand-red">
+          {site.tagline}
+        </p>
+        <h1 class="text-display font-heading">Aerial intelligence for commercial construction</h1>
+        <p class="max-w-measure text-base text-white/80">{site.description}</p>
+        <a
+          href={headerCta.href}
+          class="inline-flex items-center justify-center rounded-md bg-brand-red px-3 py-2 font-heading text-[1.1875rem] font-bold uppercase leading-none text-white transition-colors duration-150 ease-standard hover:bg-brand-red-deep"
+        >
+          {headerCta.label}
+        </a>
+      </Stack>
+    </Container>
+  </Section>
+
+  {sections.map((entry) => <SectionRenderer entry={entry} />)}
+</BaseLayout>

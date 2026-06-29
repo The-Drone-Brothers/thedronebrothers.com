@@ -1,0 +1,29 @@
+---
+/* Contact page — renders the reusable <Form>. The header CTA points here. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
+import Form from '../components/Form.astro';
+import { site } from '../config/site';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get a quote or talk to Drone Brothers about aerial documentation for your construction site."
+>
+  <Section>
+    <Container size="measure">
+      <h1 class="text-h1 font-heading">Get a quote</h1>
+      <p class="mt-2 max-w-measure text-base">
+        Tell us about your project and we'll be in touch. Prefer to talk now? Call
+        <a
+          href={`tel:${site.telephone.replace(/[^+\d]/g, '')}`}
+          class="font-semibold text-brand-red">{site.telephone}</a
+        >.
+      </p>
+      <div class="mt-6">
+        <Form />
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>

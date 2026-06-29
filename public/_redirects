@@ -1,0 +1,8 @@
+# Cloudflare Pages redirects. One rule per line:  /from  /to  [status]
+# Default status is 302; use 301 for permanent moves. Most specific rules first.
+# Populate during the content migration / DNS cutover (TODO.md #12) to preserve SEO
+# from legacy URLs. Examples (commented — uncomment/adapt as real pages land):
+#
+# /services.html      /services             301
+# /drone-mapping      /services/mapping-analytics   301
+# /blog/*             /blog/:splat          301

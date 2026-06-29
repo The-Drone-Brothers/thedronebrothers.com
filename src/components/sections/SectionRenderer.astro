@@ -1,0 +1,46 @@
+---
+/* SectionRenderer — maps a `sections` entry to its component. FROZEN.
+   Add a new `type` here AND in the content.config.ts discriminated union when a
+   new section kind is needed (a foundation change). */
+import { render, type CollectionEntry } from 'astro:content';
+import CtaSection from './CtaSection.astro';
+import TestimonialSection from './TestimonialSection.astro';
+import ProseSection from './ProseSection.astro';
+
+interface Props {
+  entry: CollectionEntry<'sections'>;
+}
+const { entry } = Astro.props as Props;
+const data = entry.data;
+
+const Prose = data.type === 'prose' ? (await render(entry)).Content : null;
+---
+
+{
+  data.type === 'cta' && (
+    <CtaSection
+      heading={data.heading}
+      body={data.body}
+      buttonLabel={data.buttonLabel}
+      buttonHref={data.buttonHref}
+      background={data.background}
+    />
+  )
+}
+{
+  data.type === 'testimonial' && (
+    <TestimonialSection
+      quote={data.quote}
+      author={data.author}
+      role={data.role}
+      background={data.background}
+    />
+  )
+}
+{
+  data.type === 'prose' && Prose && (
+    <ProseSection heading={data.heading} background={data.background}>
+      <Prose />
+    </ProseSection>
+  )
+}

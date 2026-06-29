@@ -1,0 +1,109 @@
+---
+/* Header — global chrome (FROZEN / change-controlled).
+   Logo (primary horizontal, on white), data-driven primary nav, prominent CTA,
+   and an accessible mobile hamburger menu (button + aria-expanded, Esc to close).
+   SVG imported as ?url + <img> to avoid inline-SVG class collisions. */
+import Container from './primitives/Container.astro';
+import { primaryNav, headerCta } from '../config/navigation';
+import logoUrl from '../assets/logos/logo-horizontal-color.svg?url';
+
+const navLink =
+  'font-heading text-small font-semibold uppercase tracking-wide text-ink transition-colors hover:text-brand-red';
+// CTA: white-on-red is AA only at large/bold sizes -> 19px bold (>= 18.7px). See CLAUDE/brand notes.
+const cta =
+  'inline-flex items-center justify-center rounded-md bg-brand-red px-3 py-2 font-heading text-[1.1875rem] font-bold uppercase leading-none text-white transition-colors duration-150 ease-standard hover:bg-brand-red-deep';
+---
+
+<header class="border-b border-border bg-white">
+  <Container>
+    <div class="flex items-center justify-between gap-3 py-2 md:py-3">
+      <a href="/" class="inline-flex shrink-0 items-center">
+        <img src={logoUrl} alt="Drone Brothers" class="h-5 w-auto md:h-6" />
+      </a>
+
+      {/* Desktop nav */}
+      <nav class="hidden items-center gap-4 md:flex" aria-label="Primary">
+        {
+          primaryNav.map((item) => (
+            <a href={item.href} class={navLink}>
+              {item.label}
+            </a>
+          ))
+        }
+        <a href={headerCta.href} class={cta}>{headerCta.label}</a>
+      </nav>
+
+      {/* Mobile toggle */}
+      <button
+        id="nav-toggle"
+        type="button"
+        class="group inline-flex items-center justify-center rounded-md p-1 text-ink md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open menu"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="square"
+          aria-hidden="true"
+          class="h-3 w-3 group-aria-expanded:hidden"
+        >
+          <line x1="3" y1="7" x2="21" y2="7"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="17" x2="21" y2="17"></line>
+        </svg>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="square"
+          aria-hidden="true"
+          class="hidden h-3 w-3 group-aria-expanded:block"
+        >
+          <line x1="5" y1="5" x2="19" y2="19"></line>
+          <line x1="19" y1="5" x2="5" y2="19"></line>
+        </svg>
+      </button>
+    </div>
+
+    {/* Mobile menu */}
+    <nav id="mobile-nav" aria-label="Primary" class="border-t border-border pb-3 md:hidden" hidden>
+      <ul class="flex flex-col">
+        {
+          primaryNav.map((item) => (
+            <li>
+              <a href={item.href} class={`block py-2 ${navLink}`}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={headerCta.href} class={`mt-2 ${cta}`}>{headerCta.label}</a>
+    </nav>
+  </Container>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-nav');
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menu.hidden = !open;
+    };
+    toggle.addEventListener('click', () => setOpen(Boolean(menu.hidden)));
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

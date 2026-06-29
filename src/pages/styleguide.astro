@@ -5,6 +5,8 @@
    /styleguide (not /_styleguide) and is marked noindex + excluded from sitemap.
    Self-contained for Phase 1; will adopt BaseLayout once it exists (Phase 2). */
 import '../styles/global.css';
+import { Picture } from 'astro:assets';
+import monogram from '../assets/logos/drone-bros-monogram.png';
 
 const colors = [
   {
@@ -195,6 +197,26 @@ const spacing = [
             shadow-md
           </div>
         </div>
+      </section>
+
+      <!-- IMAGE OPTIMIZATION (astro:assets) -->
+      <section class="mt-6" aria-labelledby="sg-img">
+        <h2 id="sg-img" class="text-h2 font-heading">Image optimization</h2>
+        <p class="mt-2 max-w-measure text-small text-gray-mid">
+          Built-in <code>astro:assets</code>
+          <code>&lt;Picture&gt;</code> — emits AVIF + WebP with a PNG fallback and responsive <code
+            >srcset</code
+          > at build time.
+        </p>
+        <Picture
+          src={monogram}
+          formats={['avif', 'webp']}
+          fallbackFormat="png"
+          widths={[64, 128]}
+          sizes="128px"
+          alt="Drone Brothers DB monogram"
+          class="mt-3 h-16 w-auto"
+        />
       </section>
 
       <!-- BRAND RULES -->

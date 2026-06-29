@@ -2,3 +2,7 @@ node_modules/
 dist/
 .astro/
 *.pdf
+*.svg
+.github/
+# content entries are authored data (markdown), not code — don't reformat
+src/content/

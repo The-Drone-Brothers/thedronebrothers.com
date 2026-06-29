@@ -1,0 +1,17 @@
+---
+/* Sidebar — optional, slot-driven aside for future article/resource layouts.
+   FROZEN / change-controlled. Sticky on desktop; renders nothing structural
+   beyond the landmark + its slotted content. */
+interface Props {
+  ariaLabel?: string;
+  class?: string;
+}
+const { ariaLabel = 'Related', class: className = '' }: Props = Astro.props;
+---
+
+<aside
+  aria-label={ariaLabel}
+  class:list={['rounded-md border border-border bg-surface p-3 md:sticky md:top-3', className]}
+>
+  <slot />
+</aside>

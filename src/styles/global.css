@@ -32,7 +32,7 @@
     font-family: var(--font-heading);
     font-weight: 700;
     line-height: 1.15;
-    color: var(--color-ink);
+    color: inherit; /* inherit from context so headings read on dark sections */
     text-wrap: balance;
   }
   h1 {

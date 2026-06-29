@@ -1,0 +1,11 @@
+# Link-check ignore (lychee). Regex patterns matched against link URLs.
+#
+# These are INTENDED routes declared in src/config/navigation.ts whose pages are
+# built later (content phase). They 404 today by design. DELETE the matching line
+# here as each page lands, so the link check starts enforcing it.
+/dsp-plus$
+/about$
+/privacy$
+/terms$
+/services$
+/services/

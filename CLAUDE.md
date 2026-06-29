@@ -42,14 +42,27 @@ unlock. Uninstructed change is forbidden; instructed change is fine.
 ## 4) What is FROZEN (foundation) vs OPEN (content)
 
 **FROZEN — foundation (change only in a sanctioned foundation session):**
-`astro.config.*`, `src/styles/tokens.css` + global CSS, `@theme` config, layout
-primitives, `BaseLayout`/`Page`/`Article` layouts, `Header`/`Footer`/`Sidebar`,
-`<Seo>`, `src/config/*` (site, navigation), `src/content.config.ts` (Zod schemas),
-routing files, CI/CD workflows, governance docs, this `CLAUDE.md`.
+
+- `astro.config.mjs`, `tsconfig.json`, `package.json` / `package-lock.json`
+- `src/styles/tokens.css` (the `@theme` token source) + `src/styles/global.css`
+- `src/components/primitives/*` (`Container`/`Section`/`Stack`/`Grid`),
+  `src/components/Seo.astro`, `Header.astro`, `Footer.astro`, `Sidebar.astro`, `Form.astro`
+- `src/components/sections/*` (section components + `SectionRenderer`) — the section
+  _types_ are foundation; the section _entries_ are content (see OPEN)
+- `src/layouts/*` (`BaseLayout`, `PageLayout`, `ArticleLayout`)
+- `src/config/*` (`site.ts`, `navigation.ts`), `src/content.config.ts` (Zod schemas)
+- routing files in `src/pages/*` (`[...slug].astro`, `blog/*`, `rss.xml.ts`, `search.astro`,
+  `contact.astro`, `styleguide.astro`) and `src/assets/logos/*`
+- `public/*` (favicons, `site.webmanifest`, `robots.txt`, `_redirects`)
+- `.github/*` (CI/CD workflows, `CODEOWNERS`, PR template), `.lycheeignore`,
+  `docs/GOVERNANCE.md`, and this `CLAUDE.md`
 
 **OPEN — content (safe to add/edit in a normal content session):**
 content-collection entries (markdown + front-matter) under `src/content/**`,
-and the copy _inside_ them. That's it. Content lives in data, never in the chassis.
+and the copy _inside_ them — including **home-page sections** in
+`src/content/sections/**` (add/reorder/edit CTA, testimonial, prose blocks).
+That's it. Content lives in data, never in the chassis. (The `__example` entries and
+the sample `sections/*` are deletable once real content exists.)
 
 ## 5) How to make a SANCTIONED foundation change (unfreeze → change → refreeze)
 

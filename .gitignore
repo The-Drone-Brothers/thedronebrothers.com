@@ -17,6 +17,9 @@ dist/
 # claude code local (per-machine) settings
 .claude/settings.local.json
 
+# local team-coordination tracker (human action items; not part of the site)
+TODO.md
+
 # --- Confidential reference material — NEVER commit to this PUBLIC repo ---
 # Brand style guide, data dictionary, internal decision brief, operator prompt.
 DB_style_guide F.pdf

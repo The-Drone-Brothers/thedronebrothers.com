@@ -1,0 +1,4 @@
+# Code owners — every PR requires review from an owner (the single publish gate).
+# TODO (#10): replace with the named publish-gate approver's GitHub handle once
+# decided. Default owner for now is the build account.
+* @webidextrousdev

@@ -1,0 +1,15 @@
+---
+/* Container — centers content and constrains width. FROZEN / change-controlled.
+   size="page" (1200px) for layouts; size="measure" (680px) for reading prose. */
+interface Props {
+  as?: string;
+  size?: 'page' | 'measure';
+  class?: string;
+}
+const { as: Tag = 'div', size = 'page', class: className = '' }: Props = Astro.props;
+const max = size === 'measure' ? 'max-w-measure' : 'max-w-page';
+---
+
+<Tag class:list={['mx-auto w-full px-3 md:px-5', max, className]}>
+  <slot />
+</Tag>

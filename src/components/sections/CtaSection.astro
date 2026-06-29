@@ -1,0 +1,46 @@
+---
+/* CtaSection — call-to-action band. FROZEN / change-controlled.
+   Rendered from a `sections` entry of type "cta". */
+import Container from '../primitives/Container.astro';
+import Stack from '../primitives/Stack.astro';
+
+interface Props {
+  heading: string;
+  body?: string;
+  buttonLabel: string;
+  buttonHref: string;
+  background?: 'white' | 'surface' | 'ink' | 'red';
+}
+const { heading, body, buttonLabel, buttonHref, background = 'red' }: Props = Astro.props;
+
+const bgClass = {
+  white: 'bg-white text-ink',
+  surface: 'bg-surface text-ink',
+  ink: 'bg-ink text-white',
+  red: 'bg-brand-red text-white',
+}[background];
+
+// On a red background the button inverts to white/red; otherwise it's the red CTA.
+const button =
+  background === 'red'
+    ? 'bg-white text-brand-red hover:bg-surface'
+    : 'bg-brand-red text-white hover:bg-brand-red-deep';
+---
+
+<section class:list={['py-8 md:py-10', bgClass]}>
+  <Container>
+    <Stack gap={3} class="items-start">
+      <h2 class="text-h2 font-heading">{heading}</h2>
+      {body && <p class="max-w-measure text-base">{body}</p>}
+      <a
+        href={buttonHref}
+        class:list={[
+          'inline-flex items-center justify-center rounded-md px-3 py-2 font-heading text-[1.1875rem] font-bold uppercase leading-none transition-colors duration-150 ease-standard',
+          button,
+        ]}
+      >
+        {buttonLabel}
+      </a>
+    </Stack>
+  </Container>
+</section>
