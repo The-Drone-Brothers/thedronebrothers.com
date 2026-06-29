@@ -1,0 +1,5 @@
+# Cloudflare Pages headers. Production custom domains (apex/www) are indexable;
+# the preview subdomain must NOT be (a custom preview domain does not get
+# Cloudflare's automatic noindex — only *.pages.dev preview URLs do).
+https://preview.thedronebrothers.com/*
+  X-Robots-Tag: noindex
