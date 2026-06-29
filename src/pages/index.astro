@@ -3,9 +3,7 @@
    the `sections` content collection, ordered by `order`. Non-technical authors
    add/edit sections as markdown in src/content/sections/** — never this file. */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/primitives/Section.astro';
-import Container from '../components/primitives/Container.astro';
-import Stack from '../components/primitives/Stack.astro';
+import HeroVideo from '../components/HeroVideo.astro';
 import SectionRenderer from '../components/sections/SectionRenderer.astro';
 import { getCollection } from 'astro:content';
 import { site } from '../config/site';
@@ -15,23 +13,14 @@ const sections = (await getCollection('sections')).sort((a, b) => a.data.order -
 ---
 
 <BaseLayout>
-  <Section background="ink">
-    <Container>
-      <Stack gap={3} class="items-start">
-        <p class="text-caption font-heading uppercase tracking-wide text-brand-red">
-          {site.tagline}
-        </p>
-        <h1 class="text-display font-heading">Aerial intelligence for commercial construction</h1>
-        <p class="max-w-measure text-base text-white/80">{site.description}</p>
-        <a
-          href={headerCta.href}
-          class="inline-flex items-center justify-center rounded-md bg-brand-red px-3 py-2 font-heading text-[1.1875rem] font-bold uppercase leading-none text-white transition-colors duration-150 ease-standard hover:bg-brand-red-deep"
-        >
-          {headerCta.label}
-        </a>
-      </Stack>
-    </Container>
-  </Section>
+  <HeroVideo
+    videoSrc="/assets/video/hero-bg.mp4"
+    tagline={site.tagline}
+    heading="Aerial intelligence for commercial construction"
+    description={site.description}
+    ctaLabel={headerCta.label}
+    ctaHref={headerCta.href}
+  />
 
   {sections.map((entry) => <SectionRenderer entry={entry} />)}
 </BaseLayout>
