@@ -3,6 +3,14 @@
 > Read this file first, every session. It defines what is frozen, what is open, and
 > how a sanctioned change to the frozen parts is made. Keep this file short — bloated
 > instruction files waste the context budget that should go to real work.
+>
+> **DESIGN LAW — MANDATORY:** Before creating or editing ANY page, section, text,
+> button, icon, image, or other visual/content element, read and fully apply
+> [`DESIGN.md`](./DESIGN.md) — the binding translation of the Drone Brothers Brand
+> Style Guide v2.0. It is non-optional and applies in full to every such task, in
+> every session. If a request would violate it, STOP and say so rather than ship
+> off-brand work. (`CLAUDE.md` = what you may touch; `DESIGN.md` = how it must look
+> and read.)
 
 ## 1) What this project is
 
@@ -55,7 +63,7 @@ unlock. Uninstructed change is forbidden; instructed change is fine.
   `contact.astro`, `styleguide.astro`) and `src/assets/logos/*`
 - `public/*` (favicons, `site.webmanifest`, `robots.txt`, `_redirects`)
 - `.github/*` (CI/CD workflows, `CODEOWNERS`, PR template), `.lycheeignore`,
-  `docs/GOVERNANCE.md`, and this `CLAUDE.md`
+  `docs/GOVERNANCE.md`, `DESIGN.md` (brand/design law), and this `CLAUDE.md`
 
 **OPEN — content (safe to add/edit in a normal content session):**
 content-collection entries (markdown + front-matter) under `src/content/**`,
