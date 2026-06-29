@@ -1,0 +1,4 @@
+/* Global stylesheet — Tailwind v4 via @tailwindcss/vite.
+   Phase 0: import only. Design tokens (@theme), reset, base typography, and
+   fonts arrive in Phase 1. This file is foundation (change-controlled). */
+@import 'tailwindcss';
