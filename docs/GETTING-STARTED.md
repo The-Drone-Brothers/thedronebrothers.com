@@ -64,9 +64,22 @@ This is the governance model from `CLAUDE.md`. The demo below shows all three.
 ## 4. ⭐ The demo: the CEO adds a section to the home page
 
 **Scenario:** Andy (CEO) wants a new **testimonial** (or a **call‑to‑action**) on the home
-page. He never opens a code editor. Here are three ways to do it — pick one for the Zoom.
+page. He never opens a code editor.
 
-### Path A — On your computer, with Claude Code (recommended for the live demo)
+> **Which path for whom:**
+>
+> - **CEO / marketing, day‑to‑day → Path B (web browser).** No install, nothing to break,
+>   and you preview at a link. This is the recommended everyday path.
+> - **The live Zoom demo / developers → Path A (local).** Good for showing the mechanics on
+>   one screen.
+> - **Path C** is the "there's no lock‑in" proof for the CTO.
+>
+> **You don't memorize commands or file formats** — you talk. Say _"add a testimonial from
+> Jordan Lee at TopGolf, after the first one"_ or _"looks good, send it to the team."_ Those
+> map to built‑in **skills** (`.claude/skills/`) that do the correct, safe thing every time
+> (right file, right fields, content‑only, then a reviewed pull request).
+
+### Path A — On your computer, with Claude Code (for the live demo / developers)
 
 One‑time setup (the developer does this once, or screen‑shares it):
 
@@ -118,13 +131,23 @@ positioned exactly where you asked. Nothing else changed.
 
 Claude commits to a branch and opens a PR. Done — the CEO never wrote code.
 
-### Path B — In a browser, no setup (the bonus path)
+### Path B — In a browser, no setup (the CEO's everyday path) ⭐
 
-Open **claude.ai** (Claude Code on the web) and connect it to the
-`The-Drone-Brothers/thedronebrothers.com` repository. Make the same plain‑English request.
-Claude creates the file and opens the PR directly on GitHub. A reviewer sees the **staging
-preview** link on the PR (once Cloudflare Pages is connected) and approves. Good for someone
-with no local setup at all.
+Nothing to install. One‑time: you need a GitHub account with access to the repo.
+
+1. Go to **`claude.ai/code`** (Claude Code on the web) and connect it to the
+   `The-Drone-Brothers/thedronebrothers.com` repository.
+2. Type the same plain‑English request (_"add a testimonial from Jordan Lee at TopGolf,
+   after the first one"_). Claude makes the change on a branch and **opens a pull request** —
+   never `main`.
+3. **Preview it** at the link on the PR: each PR gets its own Cloudflare preview URL, and the
+   shared **`https://preview.thedronebrothers.com`** shows the latest review build _(both turn
+   on once Cloudflare Pages is connected — see Setup status)_.
+4. Say **"looks good, send it to the team for review"** — Claude marks the PR ready and
+   requests the approver. Done.
+
+No terminal, no Node, no local server — so the "blank/stale preview" problem from a laptop
+**can't happen** here; every preview is a fresh cloud build.
 
 ### Path C — No AI at all (the "it's just files" proof)
 
@@ -228,8 +251,16 @@ Every section also takes `order` (position) and `background` (`white` / `surface
 
 ## Setup status (what's live vs. pending)
 
-The foundation is **complete and verified**. To make the _staging preview links_ and the
-_production deploy_ fully automatic, a few human setup items remain (tracked in `TODO.md`):
-connect **Cloudflare Pages** + deploy keys, set the **Formspree/Turnstile** keys for the
-contact form, name the **publish‑gate approver**, and turn on **branch protection**. None of
-these affect the content‑editing demo above — that works today on a local machine.
+The foundation is **complete and verified**, and the authoring **skills** work today. To make
+the web/preview experience fully turnkey, a few human setup items remain (tracked in `TODO.md`):
+
+- **Cloudflare Pages** connected to the repo (Git integration) — this is what produces the
+  **per‑PR preview links** and the stable **`https://preview.thedronebrothers.com`** review
+  site. (Feasible and verified — `preview.*` is a proxied CNAME to a `preview` branch alias;
+  the site already ships the `X‑Robots‑Tag: noindex` header that keeps it out of Google.)
+- **Claude on the web:** install the Claude GitHub app / connect `claude.ai/code` to the repo,
+  and give the CEO a GitHub account with repo access.
+- **Formspree/Turnstile** keys (contact form), **name the publish‑gate approver**, **branch
+  protection** on `main`, and the **DNS cutover** of the live apex at launch.
+
+None of these block the local demo (Path A), which works now.
