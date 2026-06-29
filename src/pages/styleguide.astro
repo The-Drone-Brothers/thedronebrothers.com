@@ -1,0 +1,216 @@
+---
+/* DESIGN STYLEGUIDE — kitchen-sink (DELETABLE, noindex).
+   Visual proof + lock surface for the token system (CLAUDE.md §4).
+   NOTE: Astro ignores `_`-prefixed page files for routing, so this lives at
+   /styleguide (not /_styleguide) and is marked noindex + excluded from sitemap.
+   Self-contained for Phase 1; will adopt BaseLayout once it exists (Phase 2). */
+import '../styles/global.css';
+
+const colors = [
+  {
+    name: 'Brand Red',
+    var: '--color-brand-red',
+    hex: '#FF391F',
+    note: 'Accent · large display text only on white (3.3:1)',
+  },
+  {
+    name: 'Brand Red Deep',
+    var: '--color-brand-red-deep',
+    hex: '#cc2d17',
+    note: 'Depth accent · hover/active',
+  },
+  {
+    name: 'Ink (Brand Black)',
+    var: '--color-ink',
+    hex: '#1a1a1a',
+    note: 'Text + structure · never pure #000',
+  },
+  { name: 'White', var: '--color-white', hex: '#ffffff', note: 'Backgrounds · breathing room' },
+  { name: 'Surface', var: '--color-surface', hex: '#f2f2f2', note: 'Light gray sections' },
+  { name: 'Gray Mid', var: '--color-gray-mid', hex: '#555555', note: 'Muted/meta text' },
+  { name: 'Gray Dark', var: '--color-gray-dark', hex: '#333333', note: 'Secondary structure' },
+  { name: 'Border', var: '--color-border', hex: '#e0e0e0', note: 'Derived hairline (neutral)' },
+];
+
+const typeLevels = [
+  {
+    cls: 'text-display font-heading',
+    label: 'Display / Hero',
+    meta: 'Josefin 700 · 40–64px clamp',
+  },
+  { cls: 'text-h1 font-heading', label: 'Heading 1', meta: 'Josefin 700 · 32px' },
+  { cls: 'text-h2 font-heading', label: 'Heading 2', meta: 'Josefin 700 · 28px' },
+  { cls: 'text-h3 font-heading', label: 'Heading 3', meta: 'Josefin 700 · 22px' },
+  {
+    cls: 'text-subheading font-heading font-semibold',
+    label: 'Subheading',
+    meta: 'Josefin 600 · 18px',
+  },
+  { cls: 'text-base font-body', label: 'Body — Arial regular', meta: 'Arial · 16px / 1.6' },
+  { cls: 'text-small font-body', label: 'Small / meta', meta: 'Arial · 14px' },
+  {
+    cls: 'text-caption font-heading uppercase',
+    label: 'Caption / label',
+    meta: 'Josefin 700 · 11px · tracked 0.1em',
+  },
+];
+
+const spacing = [
+  { cls: 'w-1', label: '1 = 8px' },
+  { cls: 'w-2', label: '2 = 16px' },
+  { cls: 'w-3', label: '3 = 24px' },
+  { cls: 'w-4', label: '4 = 32px' },
+  { cls: 'w-5', label: '5 = 40px' },
+  { cls: 'w-6', label: '6 = 48px' },
+  { cls: 'w-8', label: '8 = 64px' },
+  { cls: 'w-10', label: '10 = 80px' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Styleguide — Drone Brothers (internal)</title>
+  </head>
+  <body>
+    <main class="mx-auto max-w-page px-3 py-6">
+      <header class="border-b border-border pb-3">
+        <p class="text-caption font-heading text-brand-red uppercase">Internal · deletable</p>
+        <h1 class="text-display font-heading">Design Styleguide</h1>
+        <p class="max-w-measure text-base text-gray-mid">
+          Token system rendered from <code>tokens.css</code>. This is the visual lock surface for
+          the foundation. Brand Style Guide v2.0.
+        </p>
+      </header>
+
+      <!-- COLOR -->
+      <section class="mt-6" aria-labelledby="sg-color">
+        <h2 id="sg-color" class="text-h2 font-heading">Color</h2>
+        <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
+          {
+            colors.map((c) => (
+              <div class="overflow-hidden rounded-md border border-border">
+                <div class="h-16 w-full" style={`background:${c.hex}`} />
+                <div class="p-2">
+                  <p class="font-heading text-subheading font-semibold">{c.name}</p>
+                  <p class="text-small text-gray-mid">
+                    {c.hex} · <code>{c.var}</code>
+                  </p>
+                  <p class="text-small text-gray-mid">{c.note}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- TYPOGRAPHY -->
+      <section class="mt-6" aria-labelledby="sg-type">
+        <h2 id="sg-type" class="text-h2 font-heading">Typography</h2>
+        <div class="mt-3 space-y-3">
+          {
+            typeLevels.map((t) => (
+              <div class="border-b border-border pb-2">
+                <span class={t.cls}>Aerial Precision</span>
+                <p class="text-small text-gray-mid">
+                  {t.label} — {t.meta}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- BUTTONS -->
+      <section class="mt-6" aria-labelledby="sg-buttons">
+        <h2 id="sg-buttons" class="text-h2 font-heading">Buttons &amp; states</h2>
+        <div class="mt-3 flex flex-wrap items-center gap-3">
+          <button
+            class="rounded-md bg-brand-red px-3 py-2 font-heading text-small font-semibold uppercase text-white transition-colors duration-150 ease-standard hover:bg-brand-red-deep"
+          >
+            Primary
+          </button>
+          <button
+            class="rounded-md border-2 border-ink px-3 py-2 font-heading text-small font-semibold uppercase text-ink transition-colors duration-150 ease-standard hover:bg-ink hover:text-white"
+          >
+            Secondary
+          </button>
+          <button
+            class="rounded-md bg-brand-red px-3 py-2 font-heading text-small font-semibold uppercase text-white opacity-50"
+            disabled
+          >
+            Disabled
+          </button>
+          <a
+            href="#sg-buttons"
+            class="font-heading text-small font-semibold uppercase text-ink underline decoration-brand-red decoration-2"
+          >
+            Text link
+          </a>
+        </div>
+        <p class="mt-2 text-small text-gray-mid">
+          Tab to a control to verify the brand-red focus ring.
+        </p>
+      </section>
+
+      <!-- SPACING -->
+      <section class="mt-6" aria-labelledby="sg-spacing">
+        <h2 id="sg-spacing" class="text-h2 font-heading">Spacing — 8px base</h2>
+        <div class="mt-3 space-y-1">
+          {
+            spacing.map((s) => (
+              <div class="flex items-center gap-2">
+                <div class={`${s.cls} h-3 bg-brand-red`} />
+                <span class="text-small text-gray-mid">{s.label}</span>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- RADIUS + SHADOW -->
+      <section class="mt-6" aria-labelledby="sg-rs">
+        <h2 id="sg-rs" class="text-h2 font-heading">Radius &amp; elevation</h2>
+        <div class="mt-3 flex flex-wrap gap-3">
+          <div class="flex h-16 w-24 items-center justify-center rounded-sm bg-surface text-small">
+            radius-sm
+          </div>
+          <div class="flex h-16 w-24 items-center justify-center rounded-md bg-surface text-small">
+            radius-md
+          </div>
+          <div class="flex h-16 w-24 items-center justify-center rounded-lg bg-surface text-small">
+            radius-lg
+          </div>
+          <div
+            class="flex h-16 w-24 items-center justify-center rounded-md bg-white shadow-sm text-small"
+          >
+            shadow-sm
+          </div>
+          <div
+            class="flex h-16 w-24 items-center justify-center rounded-md bg-white shadow-md text-small"
+          >
+            shadow-md
+          </div>
+        </div>
+      </section>
+
+      <!-- BRAND RULES -->
+      <section class="mt-6" aria-labelledby="sg-rules">
+        <h2 id="sg-rules" class="text-h2 font-heading">Brand rules baked in</h2>
+        <ul class="mt-3 max-w-measure list-disc space-y-1 pl-4 text-base">
+          <li>Brand red on white: large display text only (3.3:1) — never red body copy.</li>
+          <li>Never pure black; ink is <code>#1a1a1a</code>.</li>
+          <li>Spacing is always a multiple of 8px (Tailwind base = 8px).</li>
+          <li>Josefin Sans for headings/UI; Arial for body only.</li>
+          <li>
+            DSP+ badge always sits inside its rectangular box — no exceptions (Style Guide §11).
+            Logo arrives as official SVG (Phase 3).
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

@@ -15,6 +15,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@fontsource/josefin-sans": "5.2.8",
     "astro": "7.0.3"
   },
   "devDependencies": {

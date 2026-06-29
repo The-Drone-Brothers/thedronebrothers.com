@@ -1,0 +1,71 @@
+/* =============================================================================
+   DESIGN TOKENS — single source of truth (FROZEN / change-controlled)
+   Drone Brothers Brand Style Guide v2.0. Tailwind v4 @theme: every token here
+   becomes both a CSS custom property and a utility class (e.g. --color-brand-red
+   -> bg-brand-red / text-brand-red). Do not hardcode raw values in components.
+   ============================================================================= */
+@theme {
+  /* --- Color (Style Guide §03) -------------------------------------------- */
+  --color-brand-red: #ff391f; /* primary accent: BROTHERS, CTAs, rules, DSP+ box */
+  --color-brand-red-deep: #cc2d17; /* depth accent + red hover/active state */
+  --color-ink: #1a1a1a; /* "Brand Black" — structure/text. NEVER pure #000 */
+  --color-white: #ffffff; /* breathing room — generous white space is a brand value */
+  --color-surface: #f2f2f2; /* light gray sections/cards */
+  --color-gray-mid: #555555; /* muted text / meta */
+  --color-gray-dark: #333333; /* secondary structure */
+  --color-border: #e0e0e0; /* derived UI hairline (not a brand color; neutral) */
+
+  /* a11y note: brand-red on white is only 3.3:1 -> large DISPLAY text only.
+     Body copy is always ink-on-white or white-on-ink. Never red body on white. */
+
+  /* --- Typography (Style Guide §04) --------------------------------------- */
+  /* Josefin Sans = headings/UI (600 semibold, 700 bold). Arial = body only. */
+  --font-heading: 'Josefin Sans', Arial, sans-serif;
+  --font-body: Arial, system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+  --font-sans: Arial, system-ui, -apple-system, 'Helvetica Neue', sans-serif; /* default */
+
+  /* Modular type scale (base 16px = 1rem). Headlines clamp 22–32px per guide. */
+  --text-caption: 0.6875rem; /* 11px */
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.1em; /* tracked, all-caps labels */
+  --text-small: 0.875rem; /* 14px */
+  --text-small--line-height: 1.5;
+  --text-base: 1rem; /* 16px body (web baseline; guide's 14px is print) */
+  --text-base--line-height: 1.6;
+  --text-subheading: 1.125rem; /* 18px — Josefin 600 */
+  --text-subheading--line-height: 1.4;
+  --text-h3: 1.375rem; /* 22px */
+  --text-h3--line-height: 1.25;
+  --text-h2: 1.75rem; /* 28px */
+  --text-h2--line-height: 1.15;
+  --text-h1: 2rem; /* 32px */
+  --text-h1--line-height: 1.1;
+  --text-display: clamp(2.5rem, 4vw + 1rem, 4rem); /* 40–64px hero */
+  --text-display--line-height: 1.05;
+
+  /* --- Spacing (Style Guide §07) ------------------------------------------ */
+  /* 8px base: ALL spacing is a multiple of 8. Set Tailwind's base unit to 8px
+     so p-1=8, p-2=16, p-3=24, p-4=32, p-5=40, p-6=48, p-8=64, p-10=80. */
+  --spacing: 0.5rem; /* 8px */
+
+  /* --- Layout containers -------------------------------------------------- */
+  --container-measure: 42.5rem; /* 680px — max reading width for body prose */
+  --container-page: 75rem; /* 1200px — page content max-width */
+
+  /* --- Breakpoints (brand uses 480 + 768; keep lg for wide screens) ------- */
+  --breakpoint-sm: 30rem; /* 480px */
+  --breakpoint-md: 48rem; /* 768px */
+
+  /* --- Radius (brand favors hard, precise corners — keep small) ----------- */
+  --radius-sm: 0.125rem; /* 2px */
+  --radius-md: 0.25rem; /* 4px */
+  --radius-lg: 0.5rem; /* 8px */
+
+  /* --- Shadow (subtle; ink-tinted) ---------------------------------------- */
+  --shadow-sm: 0 1px 2px rgba(26, 26, 26, 0.06);
+  --shadow-md: 0 4px 12px rgba(26, 26, 26, 0.1);
+
+  /* --- Motion (one standard easing; reduced-motion handled in global.css) - */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --default-transition-duration: 150ms;
+}
