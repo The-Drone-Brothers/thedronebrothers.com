@@ -41,8 +41,8 @@ export const site: SiteConfig = {
   locale: 'en_US',
   telephone: '+1-248-763-0870',
   email: 'info@dronebros.com',
-  // TODO: add a 1200x630 default share image, then set e.g. '/og-default.png'.
-  ogImage: undefined,
+  // 1200x630 default share image (brand black, horizontal lockup + tagline).
+  ogImage: '/og-default.png',
   sameAs: [
     'https://www.linkedin.com/company/drone-brothers/',
     'https://www.instagram.com/dronebros1/',
